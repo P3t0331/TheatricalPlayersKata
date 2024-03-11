@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace TheatricalPlayersRefactoringKata
 {
-    public class StatementPrinter : IPrinter
+    public class ConsolePrinter : IPrinter
     {
         public string Print(Invoice invoice, Dictionary<string, Play> plays)
         {
@@ -13,21 +16,23 @@ namespace TheatricalPlayersRefactoringKata
             var result = string.Format("Statement for {0}\n", invoice.Customer);
             var cultureInfo = new CultureInfo("en-US");
 
-            foreach(var perf in invoice.Performances) 
+            foreach (var perf in invoice.Performances)
             {
                 var play = plays[perf.PlayID];
                 var thisAmount = 0;
-                switch (play.Type) 
+                switch (play.Type)
                 {
                     case "tragedy":
                         thisAmount = 40000;
-                        if (perf.Audience > 30) {
+                        if (perf.Audience > 30)
+                        {
                             thisAmount += 1000 * (perf.Audience - 30);
                         }
                         break;
                     case "comedy":
                         thisAmount = 30000;
-                        if (perf.Audience > 20) {
+                        if (perf.Audience > 20)
+                        {
                             thisAmount += 10000 + 500 * (perf.Audience - 20);
                         }
                         thisAmount += 300 * perf.Audience;
